@@ -8,34 +8,34 @@
  * @head: The address of the pointer to the first element of the list
  * @n: The number to store in the new element
  *
- * Return: A pointer to the new element, or NULL on failure
+ * Return: A pointer to the new element
  */
 dlistint_t *add_dnodeint_end(dlistint_t **head, const int n)
 {
-    dlistint_t *new = malloc(sizeof(dlistint_t));
+    dlistint_t *new;
+
+    new = malloc(sizeof(dlistint_t));
     if (new == NULL)
     {
         return (NULL);
     }
-
     new->n = n;
     new->next = NULL;
+    new->prev = NULL;
 
     if (*head == NULL)
     {
-        new->prev = NULL;
         *head = new;
     }
     else
     {
-        dlistint_t *tail = *head;
-        while (tail->next != NULL)
+        dlistint_t *last = *head;
+        while (last->next != NULL)
         {
-            tail = tail->next;
+            last = last->next;
         }
-        tail->next = new;
-        new->prev = tail;
+        last->next = new;
+        new->prev = last;
     }
-
     return (new);
 }
